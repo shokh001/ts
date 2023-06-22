@@ -1,48 +1,11 @@
 "use strict";
-//TS => interface
-// type iPerson = {
-//     _name: string;
-//     _age: number;
-//     sayHello(): string;
-// }
-// interface iPerson {
-//     _name: string;
-//     _age: number;
-// }
-// interface iPerson {
-//     sayHello(): string;
-// }
-//-------interfacelar bir xil nomda bulishi mumkin natija hammasini yigindisi bo`ladi
-// type iPerson = {
-//     _name: string;
-//     _age: number;
-// }
-// type iPerson = {
-//     sayHello(): string;
-// }
-//------- typelarda ikkita bir xil nom bulamaydi
-// interface iPersonProps {
-//     _name: string;
-// }
-// interface iPersonProps2 {
-//     _age: number;
-// }
-// interface iPerson extends iPersonProps, iPersonProps2 {
-//     sayHello(): string;
-// }
-//------- interfacelarda 1 dan ortiq interfacedan voris olish mumkn
-// type iPersonProps = {
-//     _name: string;
-// }
-// type iPersonProps2 = {
-//     _age: number;
-// }
-// type iPerson = iPersonProps & iPersonProps2 & {
-//     sayHello(): string;
-// }
-//------- typelarda voris olib bulmaydi lekn birlashtirish mumkn
+//TS => abstract class
 class Person {
     constructor(name, age) {
+        // abstract classlar faqat voris olish uchun ishlatladi
+        // va ulardan object hosil qila olmaymiz
+        // abstract classlar ichida abstract methodlar yaratish mumkn
+        // abstract methodlar vorislik olinayotgan classlarda qo'llanilishi majburiy
         this._name = '';
         this._age = 0;
         this._name = name;
@@ -53,16 +16,23 @@ class Person {
     }
 }
 class Student extends Person {
-    constructor() {
-        super(...arguments);
+    constructor(name, age, group, course) {
+        super(name, age);
         this._group = '';
         this._course = 0;
+        this._group = group;
+        this._course = course;
     }
     sayHello() {
         const parent = super.sayHello();
         return `${parent} Salom`;
     }
+    info() {
+        return `${this._name}`;
+    }
 }
-const shoh = new Person('Shohjahon', 22);
+// const dilmurod: iPerson = new Person('Dilmurod', 23);
+const shoh = new Student('Shohjahon', 22, '213-19', 4);
 console.log(shoh);
+console.log(shoh.info());
 //# sourceMappingURL=index.js.map
