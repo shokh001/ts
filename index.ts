@@ -1,23 +1,18 @@
-//TS => abstract class
+//TS => [puclic, private, protected, (readonly)]
 
-interface iPerson {
-    _name: string;
-    _age: number;
-    sayHello(): string;
-    info(): string;
-}
+// private --> faqat classni uzida ishlatsa buladi voris olingan class
+// yoki yasalgan objectda emas
 
-interface iStudent extends iPerson {
-    _group: string;
-    _course: number;
-}
+// protected --> classni uzida ishlatsa va voris olingan class da ishlatsa buladi
+// lekin yasalgan objectda emas
 
-abstract class Person implements iPerson {
-    // abstract classlar faqat voris olish uchun ishlatladi
-    // va ulardan object hosil qila olmaymiz
-    // abstract classlar ichida abstract methodlar yaratish mumkn
-    // abstract methodlar vorislik olinayotgan classlarda qo'llanilishi majburiy
-    _name: string = '';
+// readonly --> qaysiki constantaga o`xshash ishlaydi.
+
+class Person {
+    // public _name: string = '';
+    // private _name: string = '';
+    // protected _name: string = '';
+    public readonly _name: string = '';
     _age: number = 0;
 
     constructor(name: string, age: number) {
@@ -25,14 +20,15 @@ abstract class Person implements iPerson {
         this._age = age;
     }
 
+    // constructor(public name: string, private age: number) { }
+    // constructorda puclic, private va protected
+
     sayHello(): string {
         return `Assalomu alaykum. Men ${this._name}man`
     }
-
-    abstract info(): string;
 }
 
-class Student extends Person implements iStudent {
+class Student extends Person {
     _group: string = '';
     _course: number = 0;
 
@@ -52,9 +48,11 @@ class Student extends Person implements iStudent {
     }
 }
 
-// const dilmurod: iPerson = new Person('Dilmurod', 23);
+const dilmurod: Person = new Person('Dilmurod', 23);
+console.log(dilmurod);
+// dilmurod._name = 'Sardor' error
 
-const shoh: iStudent = new Student('Shohjahon', 22, '213-19', 4);
+
+const shoh: Student = new Student('Shohjahon', 22, '213-19', 4);
 console.log(shoh);
-console.log(shoh.info());
 
