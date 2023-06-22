@@ -1,41 +1,47 @@
 "use strict";
-//TS => Arrays, Tuples & Enums
-let a = []; // --> this is any type
-a = [12, 'sdf', true, undefined, {}];
-// let b = [1, 2, 3, 4];
-// b = ['str']; error
-// array elon qilish
-let b; // 1-way
-b = [11, 12];
-let c = [1]; // 2-way
-let unionArr = [1212, 'str'];
-let unionArr2 = [false, 42342];
-// tuples --> element typelariga shablon -> kortejlar
-let tup;
-tup = [12, 'sfds'];
-// tup = ['ssf', 242]  error
-// tup = [2423, 'qe', 'sdfsd']  error
-let tup2;
-tup2 = [2423, ['qe', 'sdfsd']];
-// ENUMS --> qayta hisoblash
-var gender;
-(function (gender) {
-    gender[gender["male"] = 0] = "male";
-    gender[gender["female"] = 1] = "female";
-})(gender || (gender = {}));
-// console.log(gender[gender.male]); // log => male
-// enum g {
-//     a,
-//     b = 10,
-//     c
-// }
-// console.log(g.a, g.b, g.c); //log => 0, 10, 11 
-// bu yuerda property string bulgani uchun value orqali keyni ola olamymz
-// chunki bunaqa value dagi key bulsa ushani qiymatini olib kelib quyadi
-var h;
-(function (h) {
-    h["a"] = "Hi";
-    h["b"] = "TS";
-})(h || (h = {}));
-console.log(0 /* i.a */, 1 /* i.b */);
+//TS => classes
+class Person {
+    constructor(name, age) {
+        this._name = name;
+        this._age = age;
+    }
+    info(value) {
+        return `${this._name} - ${this._age + value} da`;
+    }
+    static description() {
+        return 'Bu klass Person haqida';
+    }
+    get name() {
+        return this._name;
+    }
+    set name(value) {
+        this._name = value;
+    }
+    get age() {
+        return this._age;
+    }
+    set age(value) {
+        if (value > 0 && value < 100) {
+            this._age = value;
+        }
+        else {
+            throw new Error('Notugri yosh');
+        }
+    }
+}
+Person.isFly = false; // static kalit suzi bilan e`lon qilingan maydon classni uziga tegishli buladi undon olingan obyetga emas
+const shoh = new Person('shoh', 22);
+const dilmurodov = new Person('Dilmurodov', 22);
+// console.log(shoh);
+// console.log(dilmurodov);
+// console.log(shoh.info(2));
+// console.log(Person.description());
+shoh.age = 24;
+// console.log(shoh);
+if (shoh instanceof Person) { // instanceof object classga tegishli ekanliligini tekshiradi
+    console.log(true);
+}
+else {
+    console.log(false);
+}
 //# sourceMappingURL=index.js.map

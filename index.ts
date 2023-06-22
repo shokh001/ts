@@ -1,63 +1,59 @@
-//TS => Arrays, Tuples & Enums
+//TS => classes
 
-let a = []; // --> this is any type
-a = [12, 'sdf', true, undefined, {}];
+class Person {
+    _name: string;
+    _age: number
 
-// let b = [1, 2, 3, 4];
-// b = ['str']; error
+    constructor(name: string, age: number) {
+        this._name = name;
+        this._age = age
+    }
 
-// array elon qilish
-let b: number[]; // 1-way
-b = [11, 12];
+    info(value: number): string {
+        return `${this._name} - ${this._age + value} da`
+    }
 
-let c: Array<number> = [1]; // 2-way
+    static isFly = false; // static kalit suzi bilan e`lon qilingan maydon classni uziga tegishli buladi undon olingan obyetga emas
+    static description(): string {
+        return 'Bu klass Person haqida'
+    }
 
+    get name(): string {
+        return this._name
+    }
 
-let unionArr: (number | string)[] = [1212, 'str'];
-let unionArr2: Array<boolean | number> = [false, 42342];
+    set name(value: string) {
+        this._name = value
+    }
 
+    get age(): number {
+        return this._age
+    }
 
-// tuples --> element typelariga shablon -> kortejlar
-
-let tup: [number, string];
-tup = [12, 'sfds'];
-// tup = ['ssf', 242]  error
-// tup = [2423, 'qe', 'sdfsd']  error
-
-let tup2: [number, string[]];
-tup2 = [2423, ['qe', 'sdfsd']]
-
-// ENUMS --> qayta hisoblash
-
-enum gender {
-    male,
-    female
+    set age(value: number) {
+        if (value > 0 && value < 100) {
+            this._age = value
+        } else {
+            throw new Error('Notugri yosh')
+        }
+    }
 }
 
-// console.log(gender[gender.male]); // log => male
+const shoh: Person = new Person('shoh', 22);
+const dilmurodov: Person = new Person('Dilmurodov', 22)
 
+// console.log(shoh);
+// console.log(dilmurodov);
+// console.log(shoh.info(2));
+// console.log(Person.description());
+shoh.age = 24;
+// console.log(shoh);
 
-// enum g {
-//     a,
-//     b = 10,
-//     c
-// }
-// console.log(g.a, g.b, g.c); //log => 0, 10, 11 
-
-// bu yuerda property string bulgani uchun value orqali keyni ola olamymz
-// chunki bunaqa value dagi key bulsa ushani qiymatini olib kelib quyadi
-enum h {
-    a = 'Hi',
-    b = 'TS'
+if(shoh instanceof Person) { // instanceof object classga tegishli ekanliligini tekshiradi
+    console.log(true);    
+} else {
+    console.log(false);
+    
 }
 
-// console.log(h.a, h.b);
 
-// complatsiya bo`lmaydi jarayon cont orqali qilinsa
-// faqat natija chiqadi
-const enum i {
-    a,
-    b
-}
-
-console.log(i.a, i.b);
