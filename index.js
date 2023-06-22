@@ -1,42 +1,41 @@
 "use strict";
-//TS => Tiplarni o'zgartirish va birlashtirish
-// havfli usul
-let a = 10;
-let b = a;
-// yaxshi usul
-// unknown any ga ekvavalent
-let c = 20.224234;
-// let d: number = c; error
-let e = c; // --> type change first way
-let f = c; // --> type change second way
-// (c as number).toFixed(2) mehtodlarni ishlatish
-// (<number>c).toString() mehtodlarni ishlatish
-// union types --> tiplar birlashmasi
-let h = 10;
-h = 'str';
-// h = true error
-// literal types --> faqat belgilangan typelarni qabul qiladi
-let s;
-s = 'sm';
-let s2 = "MD";
-s2 = "LG";
-s2 = "SM";
-let s3 = false;
-s3 = "MD";
-let obj;
-// obj = {}  error
-obj = { name: 'Shoh' };
-obj = { age: 22 };
-obj = { name: 'Shohjahon', age: 22 };
-let obj2;
-obj2 = { name: 'Dilmurod', age: 22 };
-let obj3 = { name: 'Shoh' };
-obj3 = { name: 'Shoh', age: 22 };
-// obj3 = { age: 22 }; error
-if ('age' in obj3) { // in operatori
-    console.log('Have');
-}
-else {
-    console.log('Don`t have');
-}
+//TS => Arrays, Tuples & Enums
+let a = []; // --> this is any type
+a = [12, 'sdf', true, undefined, {}];
+// let b = [1, 2, 3, 4];
+// b = ['str']; error
+// array elon qilish
+let b; // 1-way
+b = [11, 12];
+let c = [1]; // 2-way
+let unionArr = [1212, 'str'];
+let unionArr2 = [false, 42342];
+// tuples --> element typelariga shablon -> kortejlar
+let tup;
+tup = [12, 'sfds'];
+// tup = ['ssf', 242]  error
+// tup = [2423, 'qe', 'sdfsd']  error
+let tup2;
+tup2 = [2423, ['qe', 'sdfsd']];
+// ENUMS --> qayta hisoblash
+var gender;
+(function (gender) {
+    gender[gender["male"] = 0] = "male";
+    gender[gender["female"] = 1] = "female";
+})(gender || (gender = {}));
+// console.log(gender[gender.male]); // log => male
+// enum g {
+//     a,
+//     b = 10,
+//     c
+// }
+// console.log(g.a, g.b, g.c); //log => 0, 10, 11 
+// bu yuerda property string bulgani uchun value orqali keyni ola olamymz
+// chunki bunaqa value dagi key bulsa ushani qiymatini olib kelib quyadi
+var h;
+(function (h) {
+    h["a"] = "Hi";
+    h["b"] = "TS";
+})(h || (h = {}));
+console.log(0 /* i.a */, 1 /* i.b */);
 //# sourceMappingURL=index.js.map
