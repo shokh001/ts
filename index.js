@@ -1,51 +1,68 @@
 "use strict";
-//TS => classes & inheritance
+//TS => interface
+// type iPerson = {
+//     _name: string;
+//     _age: number;
+//     sayHello(): string;
+// }
+// interface iPerson {
+//     _name: string;
+//     _age: number;
+// }
+// interface iPerson {
+//     sayHello(): string;
+// }
+//-------interfacelar bir xil nomda bulishi mumkin natija hammasini yigindisi bo`ladi
+// type iPerson = {
+//     _name: string;
+//     _age: number;
+// }
+// type iPerson = {
+//     sayHello(): string;
+// }
+//------- typelarda ikkita bir xil nom bulamaydi
+// interface iPersonProps {
+//     _name: string;
+// }
+// interface iPersonProps2 {
+//     _age: number;
+// }
+// interface iPerson extends iPersonProps, iPersonProps2 {
+//     sayHello(): string;
+// }
+//------- interfacelarda 1 dan ortiq interfacedan voris olish mumkn
+// type iPersonProps = {
+//     _name: string;
+// }
+// type iPersonProps2 = {
+//     _age: number;
+// }
+// type iPerson = iPersonProps & iPersonProps2 & {
+//     sayHello(): string;
+// }
+//------- typelarda voris olib bulmaydi lekn birlashtirish mumkn
 class Person {
     constructor(name, age) {
-        this._name = "";
+        this._name = '';
         this._age = 0;
         this._name = name;
         this._age = age;
     }
     sayHello() {
-        return `Assalomu alaykum ${this._name}`;
+        return `Assalomu alaykum. Men ${this._name}man`;
     }
 }
 class Student extends Person {
-    constructor(name, age, group, course) {
-        super(name, age);
-        this._group = "";
+    constructor() {
+        super(...arguments);
+        this._group = '';
         this._course = 0;
-        this._group = group;
-        this._course = course;
     }
     sayHello() {
-        const parentFunc = super.sayHello(); // otasidagi methoddan meros olish
-        return `${parentFunc}. Men ${this._course} kursda o'qiyman`;
-    }
-}
-class Teacher extends Person {
-    constructor(name, age, disciplines) {
-        super(name, age);
-        this.disciplines = [];
-        this.disciplines = disciplines;
-    }
-    info() {
         const parent = super.sayHello();
-        return `${parent}. Men o'qituvchiman`;
+        return `${parent} Salom`;
     }
 }
 const shoh = new Person('Shohjahon', 22);
 console.log(shoh);
-console.log(shoh.sayHello());
-const dilmurod = new Student('Dilmurod', 23, '213-19', 4);
-console.log(dilmurod);
-console.log(dilmurod.sayHello());
-const newDilmurod = dilmurod;
-// newDilmurod.
-console.log(newDilmurod);
-console.log(newDilmurod.sayHello());
-const abror = new Teacher("Abror", 32, ['React, JS, TS']);
-console.log(abror);
-console.log(abror.info());
 //# sourceMappingURL=index.js.map
