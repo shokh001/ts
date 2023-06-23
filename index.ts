@@ -1,58 +1,69 @@
-//TS => [puclic, private, protected, (readonly)]
+//TS => namespace
 
-// private --> faqat classni uzida ishlatsa buladi voris olingan class
-// yoki yasalgan objectda emas
-
-// protected --> classni uzida ishlatsa va voris olingan class da ishlatsa buladi
-// lekin yasalgan objectda emas
-
-// readonly --> qaysiki constantaga o`xshash ishlaydi.
-
-class Person {
-    // public _name: string = '';
-    // private _name: string = '';
-    // protected _name: string = '';
-    public readonly _name: string = '';
-    _age: number = 0;
-
-    constructor(name: string, age: number) {
-        this._name = name;
-        this._age = age;
+namespace Utils {
+    export function log(text: string, color: string, fontSize?: string): void {
+        if (fontSize) {
+            console.log(`%c${text}`, `color: ${color}; font-size: ${fontSize}`);
+        } else {
+            console.log(`%c${text}`, `color: ${color}`);
+        }
     }
 
-    // constructor(public name: string, private age: number) { }
-    // constructorda puclic, private va protected
+    log("Salom", 'red', '30px')
+    log("Salom", 'blue')
+}
 
-    sayHello(): string {
-        return `Assalomu alaykum. Men ${this._name}man`
+Utils.log('Dunyo', 'green', '24px')
+
+namespace Animals {
+    export abstract class Animal {
+        protected name: string;
+        constructor(name: string) {
+            this.name = name;
+        }
+
+        abstract say(): void;
     }
 }
 
-class Student extends Person {
-    _group: string = '';
-    _course: number = 0;
+namespace Animals {
+    export class Lion extends Animals.Animal {
+        private sound: string;
+        #sound: string; // 2-way is good way because we can catch errors correctly
 
-    constructor(name: string, age: number, group: string, course: number) {
-        super(name, age);
-        this._group = group;
-        this._course = course
+        constructor(name: string, sound: string) {
+            super(name);
+            this.sound = sound
+            this.#sound=sound
+        }
+
+        say(): void {
+            Utils.log(`${this.name} - ${this.sound}, ${this.#sound}`, 'blue', '24px')
+        }
     }
 
-    sayHello(): string {
-        const parent = super.sayHello();
-        return `${parent} Salom`
-    }
 
-    info(): string {
-        return `${this._name}`
+    export namespace Pets {
+        export class Cat extends Animals.Animal {
+            private sound: string;
+
+            constructor(name: string, sound: string) {
+                super(name);
+                this.sound = sound;
+            }
+
+            say(): void {
+                Utils.log(`${this.name} - ${this.sound}`, 'blue', '24px')
+            }
+        }
     }
 }
 
-const dilmurod: Person = new Person('Dilmurod', 23);
-console.log(dilmurod);
-// dilmurod._name = 'Sardor' error
+const lion = new Animals.Lion('Lion', 'rrrr');
+// console.log(lion.sound);
+console.log(lion.#sound);
 
+// const cat = new Animals.Pets.Cat('Cat', 'miyov');
 
-const shoh: Student = new Student('Shohjahon', 22, '213-19', 4);
-console.log(shoh);
-
+// lion.say()
+// cat.say()

@@ -1,45 +1,56 @@
 "use strict";
-//TS => [puclic, private, protected, (readonly)]
-// private --> faqat classni uzida ishlatsa buladi voris olingan class
-// yoki yasalgan objectda emas
-// protected --> classni uzida ishlatsa va voris olingan class da ishlatsa buladi
-// lekin yasalgan objectda emas
-// readonly --> qaysiki constantaga o`xshash ishlaydi.
-class Person {
-    constructor(name, age) {
-        // public _name: string = '';
-        // private _name: string = '';
-        // protected _name: string = '';
-        this._name = '';
-        this._age = 0;
-        this._name = name;
-        this._age = age;
+//TS => namespace
+var Utils;
+(function (Utils) {
+    function log(text, color, fontSize) {
+        if (fontSize) {
+            console.log(`%c${text}`, `color: ${color}; font-size: ${fontSize}`);
+        }
+        else {
+            console.log(`%c${text}`, `color: ${color}`);
+        }
     }
-    // constructor(public name: string, private age: number) { }
-    // constructorda puclic, private va protected
-    sayHello() {
-        return `Assalomu alaykum. Men ${this._name}man`;
+    Utils.log = log;
+    log("Salom", 'red', '30px');
+    log("Salom", 'blue');
+})(Utils || (Utils = {}));
+Utils.log('Dunyo', 'green', '24px');
+var Animals;
+(function (Animals) {
+    class Animal {
+        constructor(name) {
+            this.name = name;
+        }
     }
-}
-class Student extends Person {
-    constructor(name, age, group, course) {
-        super(name, age);
-        this._group = '';
-        this._course = 0;
-        this._group = group;
-        this._course = course;
+    Animals.Animal = Animal;
+})(Animals || (Animals = {}));
+(function (Animals) {
+    class Lion extends Animals.Animal {
+        constructor(name, sound) {
+            super(name);
+            this.sound = sound;
+        }
+        say() {
+            Utils.log(`${this.name} - ${this.sound}`, 'blue', '24px');
+        }
     }
-    sayHello() {
-        const parent = super.sayHello();
-        return `${parent} Salom`;
-    }
-    info() {
-        return `${this._name}`;
-    }
-}
-const dilmurod = new Person('Dilmurod', 23);
-console.log(dilmurod);
-// dilmurod._name = 'Sardor' error
-const shoh = new Student('Shohjahon', 22, '213-19', 4);
-console.log(shoh);
+    Animals.Lion = Lion;
+    let Pets;
+    (function (Pets) {
+        class Cat extends Animals.Animal {
+            constructor(name, sound) {
+                super(name);
+                this.sound = sound;
+            }
+            say() {
+                Utils.log(`${this.name} - ${this.sound}`, 'blue', '24px');
+            }
+        }
+        Pets.Cat = Cat;
+    })(Pets = Animals.Pets || (Animals.Pets = {}));
+})(Animals || (Animals = {}));
+const lion = new Animals.Lion('Lion', 'rrrr');
+const cat = new Animals.Pets.Cat('Cat', 'miyov');
+lion.say();
+cat.say();
 //# sourceMappingURL=index.js.map
