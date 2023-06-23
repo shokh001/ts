@@ -1,69 +1,39 @@
-//TS => namespace
+//TS => generic type
 
-namespace Utils {
-    export function log(text: string, color: string, fontSize?: string): void {
-        if (fontSize) {
-            console.log(`%c${text}`, `color: ${color}; font-size: ${fontSize}`);
-        } else {
-            console.log(`%c${text}`, `color: ${color}`);
-        }
-    }
+type A<T> = T;
 
-    log("Salom", 'red', '30px')
-    log("Salom", 'blue')
+type B = A<string> // B -> string
+type C = A<number> // C -> number
+type D = A<boolean> // D -> boolean
+type E = A<'TS'>;  // E -> "TS"
+
+let arr: number[] = [1, 2, 3];
+let arr2: Array<string> = ['a', 'b', 'c'];
+
+type MyArr<T> = T[];
+
+const arr3: MyArr<boolean | number> = [true, false, 12];
+
+// function echo<T>(x: T): T {
+//     return x;
+// }
+
+// const res = echo(12)
+// const res = echo('Salom')
+// const res: string = echo('Salom')
+
+const echo = <T>(x: T): T => {
+    return x;
 }
 
-Utils.log('Dunyo', 'green', '24px')
+// const res: string = echo('TS'); <=> const res = echo<string>('TS');
 
-namespace Animals {
-    export abstract class Animal {
-        protected name: string;
-        constructor(name: string) {
-            this.name = name;
-        }
-
-        abstract say(): void;
-    }
+const echo2: <T>(x: T) => T = <T>(x: T): T => {
+    return x;
 }
 
-namespace Animals {
-    export class Lion extends Animals.Animal {
-        private sound: string;
-        #sound: string; // 2-way is good way because we can catch errors correctly
+type ECHO = <T>(x: T) => T
 
-        constructor(name: string, sound: string) {
-            super(name);
-            this.sound = sound
-            this.#sound=sound
-        }
+const echo3: ECHO = <T>(x: T): T => x;
 
-        say(): void {
-            Utils.log(`${this.name} - ${this.sound}, ${this.#sound}`, 'blue', '24px')
-        }
-    }
-
-
-    export namespace Pets {
-        export class Cat extends Animals.Animal {
-            private sound: string;
-
-            constructor(name: string, sound: string) {
-                super(name);
-                this.sound = sound;
-            }
-
-            say(): void {
-                Utils.log(`${this.name} - ${this.sound}`, 'blue', '24px')
-            }
-        }
-    }
-}
-
-const lion = new Animals.Lion('Lion', 'rrrr');
-// console.log(lion.sound);
-console.log(lion.#sound);
-
-// const cat = new Animals.Pets.Cat('Cat', 'miyov');
-
-// lion.say()
-// cat.say()
+const res: string = echo3('TS');
