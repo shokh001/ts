@@ -1,50 +1,56 @@
-// TypeScript generic type (generic infer, typeof, arrays, objects)
-let arr = [1, "str", true];
+// TypeScript Utils
+// Partial, Required, NonNullable, Record
 
-type A<T> = T extends (infer U)[] ? U : never;
+// Partial
+type Person1 = { name: string; age: number };
+type Person2 = Partial<Person1>;
+// type Person2 = {
+//   name?: string | undefined;
+//   age?: number | undefined;
+// }
 
-type B = typeof arr;
+type MyPartial<T> = { [P in keyof T]?: T[P] };
+type Person3 = MyPartial<Person1>;
+// type Person3 = {
+//   name?: string | undefined;
+//   age?: number | undefined;
+// }
 
-type C = A<B>;
+// Required
+type Animal1 = { name?: string; weight: number };
+type Animal2 = Required<Animal1>;
+// type Animal2 = {
+//   name: string;
+//   weight: number;
+// }
 
-// ============================================================
+type MyRequired<T> = { [P in keyof T]-?: T[P] };
+type Animal3 = MyRequired<Animal1>;
+// type Animal3 = {
+//   name: string;
+//   weight: number;
+// }
 
-const person = { name: "Shohjahon", age: 23 };
+// NonNullable
 
-type A2<T> = T extends {
-  [key: string]: infer U;
-}
-  ? U
-  : never;
+type Color1 = string | null | undefined | number | boolean;
+type Color2 = NonNullable<Color1>; // string | number | boolean
 
-type B2 = typeof person;
+type MyNonNullable<T> = T extends null | undefined ? never : T;
+type Color3 = MyNonNullable<Color1>; // string | number | boolean
 
-type C2 = A2<B2>;
+// Record
+type Dimensions1 = { width: number; height: number; length: number };
+type Dimensions2 = Record<"width" | "height" | "length", number | string>;
+// type Dimensions2 = {
+//   width: string | number;
+//   height: string | number;
+//   length: string | number;
+// }
 
-// ============================================================
+// type MyRecord<K extends string | number | symbol, T> = { [P in K]: T };
 
-class Cat {
-  say(): void {
-    console.log("Myau");
-  }
-}
+// type Test = keyof any;
+type MyRecord<K extends keyof any, T> = { [P in K]: T };
 
-class Dog {
-  say(): void {
-    console.log("Vov");
-  }
-}
-
-interface IClass<T> {
-  new (): T;
-}
-
-function createObject<T>(clas: IClass<T>) {
-  return new clas();
-}
-
-let cat = createObject(Cat);
-let dog = createObject(Dog);
-
-cat.say();
-dog.say();
+type Dimensions3 = MyRecord<"width" | "height" | "length", number>;
