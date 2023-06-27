@@ -1,15 +1,11 @@
 "use strict";
-//TS => generic type
-class List {
-    constructor() {
-        this.elements = [];
-    }
-    add(element) {
-        this.elements.push(element);
-    }
+// TypeScript generic type (extends, ternar)
+function getName(person) {
+    console.log(person.name);
 }
-let list = new List();
-list.add(12);
-list.add('str');
-console.log(list);
+getName({ name: "Ismoil" });
+function getProperty(obj, key) {
+    return obj[key];
+}
+const result = getProperty({ name: "Shohjahon", age: 23, lastName: "Dilmurodov" }, "lastName");
 //# sourceMappingURL=index.js.map

@@ -1,49 +1,54 @@
-//TS => generic type
+// TypeScript generic type (extends, ternar)
 
-// class List<T> {
-//     elements: T[] = [];
+// type A<T> = T;
+// type B = A<string>;
+// type C = A<"TS">;
+// type D = A<number>;
 
-//     add(element: T): void {
-//         this.elements.push(element);
-//     }
+// type A<T extends string> = T;
+type A<T> = T extends string ? string : never;
+
+type B = A<string>;
+type C = A<"JS">;
+type D = A<number>;
+
+// function getName<T extends { name: string }>(person: T): void {
+//   console.log(person.name);
 // }
 
+// getName({ name: "Shohjahon", age: 23 });
 
-// let list = new List<number | string>();
+// getName({ age: 23 });
 
-// list.add(12);
-// list.add(19);
-// list.add('str');
-
-// console.log(list);
-
-
-// let list2 = new List<boolean | undefined>();
-
-// list2.add(undefined);
-// list2.add(false);
-
-// console.log(list2);
-
-interface IList<T> {
-    elements: T[];
-    add(element: T): void;
-
-    // new(name: string, age: number): void; // -> constructor
+interface IName {
+  name: string;
 }
 
-type ListType = string | number | boolean;
-
-class List implements IList<ListType> {
-    elements: ListType[] = [];
-
-    add(element: ListType): void {
-        this.elements.push(element);
-    }
+function getName<T extends IName>(person: T): void {
+  console.log(person.name);
 }
 
-let list = new List();
+getName({ name: "Ismoil" });
+// getName({ age: 23 });
 
-list.add(12);
-list.add('str');
-console.log(list);
+// =======================================================================
+
+interface Inter {
+  a: string;
+  b: boolean;
+  c: number;
+}
+
+type InterKeys = keyof Inter; // a | b | c
+
+function getProperty<ObjType, ObjKey extends keyof ObjType>(
+  obj: ObjType,
+  key: ObjKey
+) {
+  return obj[key];
+}
+
+const result = getProperty(
+  { name: "Shohjahon", age: 23, lastName: "Dilmurodov" },
+  "lastName"
+);
