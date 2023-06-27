@@ -1,16 +1,48 @@
 "use strict";
-// TypeScript BigInt
-console.log("Number.MAX_VALUE = ", Number.MAX_VALUE);
-console.log("Number.MAX_SAFE_INTEGER = ", Number.MAX_SAFE_INTEGER);
-console.log("9007199254740991 + 2 = ", 9007199254740991 + 2);
-// let a: bigint = 12; error
-let a = 12n;
-// let b: bigint = 12.3n; kasr yozib bulmaydi bigintda
-console.log('a = ', a);
-// let c: bigint = <bigint>12; error
-// let d: bigint = 12 as bigint; error
-let e = BigInt(12);
-console.log('e = ', e);
-console.log('10n / 3n = ', 10n / 3n); // 3n
-console.log("BigInt 9007199254740991 + 2 = ", BigInt(9007199254740991) + 2n);
+// TypeScript Nullish assigment vs chaining operator
+// Nullish assigment -> null yoki undefinedga tneg bulsa boshqa narsani oladi
+let a = null;
+a = undefined;
+a = 20;
+let b = a ?? 0;
+// || va ?? farqi yoki operatori false bulgan barchasini qabul qiladi ?? esa faqat null va undefinedni
+// console.log(b);
+// chaining
+// const obj = {
+//     user: {
+//         name: '',
+//         country: {
+//             region: "",
+//         }
+//     }
+// }
+// const obj2 = {
+//     user: {
+//         name: '',
+//         country: null
+//     }
+// }
+// console.log(obj.user.country?.region);
+function sum(x, y, cb) {
+    let natija = x + y;
+    // if (cb) {
+    //     cb(natija);
+    // }
+    cb?.(natija);
+    return natija;
+}
+function calcPrice(arr) {
+    let s = 0;
+    arr.forEach(element => {
+        s += element?.price ?? 0;
+    });
+    return s;
+}
+const result = calcPrice([
+    { price: 1 },
+    null,
+    { price: 4 },
+    undefined
+]);
+console.log(result);
 //# sourceMappingURL=index.js.map
