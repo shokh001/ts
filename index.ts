@@ -1,12 +1,37 @@
-// TypeScript Utils
-// Utils -> Uppercase, Lowercase, Capitalize, UnCapitalize
+// TypeScript Mustahkamlash (abstract & modules)
 
-type Sizes = 'sm' | 'md' | 'lg';
+abstract class ComputerFiles {
+    abstract name: string;
+    abstract show(): void;
 
-type U = Uppercase<Sizes>; // U = "SM" | "MD" | "LG"
+    abstract set size(value: number);
+    abstract get size(): number;
+}
 
-type L = Lowercase<U> // L = "sm" | "md" | "lg"
+class TextFile extends ComputerFiles {
+    name: string;
+    size: number;
 
-type C = Capitalize<Sizes> // C = "Sm" | "Md" | "Lg"
+    constructor(name: string, size: number) {
+        super();
+        this.name = name;
+        this.size = size;
+    }
 
-type UC = Uncapitalize<C> // UC = "sm" | "md" | "lg"
+    show(): void {
+        console.log(this.size);
+
+    }
+}
+
+// namespace & module
+
+namespace Photos {
+    export class JPEG { }
+    export class PNG { }
+}
+
+module Videos {
+    export class MP4 { }
+    export class AVI { }
+}
