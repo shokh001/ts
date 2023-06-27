@@ -1,57 +1,50 @@
 // TypeScript Utils
-// Utils -> Pick, Extract, Exclude, Omit
+// Utils -> Parameters, ConstructorParameters, ReturnType, InstanceType
 
-// Pick --> obyektdan biz aytgan fieldlarni kesib olib qaytaradi
-type Vector = {
-    x: number,
-    y: number,
-    z: number,
+function func1(x: string, y: number): boolean {
+    return x.length > y.toString().length;
 }
 
-type Vector2 = Pick<Vector, 'x' | 'y'>
-// type Vector2 = {
-//     x: number;
-//     y: number;
-// }
+type A = typeof func1;
 
-type MyPick<T, K extends keyof T> = {
-    [P in K]: T[P]
+// Parameters
+type B = Parameters<A>; // -> [x: string, y: number]
+
+type MyParameters<T extends (...args: any) => any> = T extends (...args: infer U) => any ? U : any
+
+type B2 = MyParameters<A> // -> [x: string, y: number]
+
+// ConstructorParameters
+class Class1 {
+    a: number;
+    b: string;
+
+    constructor(a: number, b: string) {
+        this.a = a;
+        this.b = b;
+    }
 }
 
-type Vector3 = MyPick<Vector, 'x' | 'z'>;
-// type Vector3 = {
-//     x: number;
-//     z: number;
-// }
+type C = typeof Class1; // -> Class1
 
-// Extract --> ikkalasida ham borlarini qaytaradi
-type A = string | number | boolean;
-type B = string | boolean;
+type D = ConstructorParameters<C>; // -> [a: number, b: string]
 
-type C = Extract<A, B> // -> string | boolean
+type MyConstructorParameters<T extends new (...args: any) => any> = T extends new (...args: infer U) => any ? U : any
 
-type MyExtract<T, U> = T extends U ? T : never;
-type D = MyExtract<A, B>; // -> string | boolean
+type D2 = MyConstructorParameters<C> // -> [a: number, b: string]
 
-// Exclude --> ikkalasida ham mavjud bo`lmagan typelarni qaytaradi.
-type E = Exclude<A, B> // -> number
+// ReturnType
 
-type MyExclude<T, U> = T extends U ? never : T;
-type F = MyExclude<A, B> // -> number
+type E = ReturnType<A>; // -> boolean
 
-//Omit --> biz aytgan propertylarni kesib tashlab qolganini qaytaradi
+type MyReturnType<T extends (...args: any) => any> = T extends (...args: any) => infer U ? U : never
 
-type Person1 = { name: string, age: number, weight: number, height: number }
-type Person2 = Omit<Person1, 'weight' | 'height'>
-// type Person2 = {
-//     name: string;
-//     age: number;
-// }
+type E2 = MyReturnType<A>; // -> boolean
 
-type MyOmit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>
-type Person3 = MyOmit<Person1, 'weight'>
-// type Person3 = {
-//     height: number;
-//     name: string;
-//     age: number;
-// }
+// InstanceType
+
+type F = InstanceType<C>; // -> Class1;
+
+type MyInstanceType<T extends new (...args: any) => any> = T extends new (...args: any) => infer U ? U : never
+
+type F2 = MyInstanceType<C>; // -> Class1;
