@@ -1,72 +1,57 @@
 // TypeScript Utils
-// Utils -> Readonly, ReadonlyArray
+// Utils -> Pick, Extract, Exclude, Omit
 
-type Article1 = { title: string; page: number };
+// Pick --> obyektdan biz aytgan fieldlarni kesib olib qaytaradi
+type Vector = {
+    x: number,
+    y: number,
+    z: number,
+}
 
-const article1: Article1 = { title: "Maqola 1", page: 1 };
+type Vector2 = Pick<Vector, 'x' | 'y'>
+// type Vector2 = {
+//     x: number;
+//     y: number;
+// }
 
-article1.title = "adsasd";
+type MyPick<T, K extends keyof T> = {
+    [P in K]: T[P]
+}
 
-type Article2 = Readonly<Article1>;
+type Vector3 = MyPick<Vector, 'x' | 'z'>;
+// type Vector3 = {
+//     x: number;
+//     z: number;
+// }
 
-const article2: Article2 = { title: "Maqola 2", page: 2 };
+// Extract --> ikkalasida ham borlarini qaytaradi
+type A = string | number | boolean;
+type B = string | boolean;
 
-// article2.title = "adsasd";
+type C = Extract<A, B> // -> string | boolean
 
-type MyReadonly<T> = { readonly [P in keyof T]: T[P] };
+type MyExtract<T, U> = T extends U ? T : never;
+type D = MyExtract<A, B>; // -> string | boolean
 
-type Article3 = MyReadonly<Article1>;
+// Exclude --> ikkalasida ham mavjud bo`lmagan typelarni qaytaradi.
+type E = Exclude<A, B> // -> number
 
-const article3: Article3 = { title: "Maqola 3", page: 2 };
+type MyExclude<T, U> = T extends U ? never : T;
+type F = MyExclude<A, B> // -> number
 
-// article3.title = "adsasd";
+//Omit --> biz aytgan propertylarni kesib tashlab qolganini qaytaradi
 
-const article4 = { title: "Maqola 4", page: 4 } as const;
+type Person1 = { name: string, age: number, weight: number, height: number }
+type Person2 = Omit<Person1, 'weight' | 'height'>
+// type Person2 = {
+//     name: string;
+//     age: number;
+// }
 
-// article4.title = "asdasd"
-
-const article5 = <const>{ title: "Maqola 5", page: 5 };
-
-// article5.page = 12;
-
-// ================================================================
-// ReadonlyArray
-
-type Articles1 = Array<Article3>;
-
-const articles1: Articles1 = [
-  { title: "Maqola 1", page: 1 },
-  { title: "Maqola 2", page: 2 },
-  { title: "Maqola 3", page: 3 },
-];
-
-// articles1.push({ title: "asd", page: 12 });
-
-type Articles2 = ReadonlyArray<Article3>;
-
-const articles2: Articles2 = [
-  { title: "Maqola 1", page: 1 },
-  { title: "Maqola 2", page: 2 },
-  { title: "Maqola 3", page: 3 },
-];
-
-// articles2.push()
-
-const articles3 = [
-  { title: "Maqola 1", page: 1 },
-  { title: "Maqola 2", page: 2 },
-  { title: "Maqola 3", page: 3 },
-] as const;
-
-// articles3.push();
-
-const articles4 = <const>[
-  { title: "Maqola 1", page: 1 },
-  { title: "Maqola 2", page: 2 },
-  { title: "Maqola 3", page: 3 },
-];
-
-// articles4.pop()
-
-function f1(arr: ReadonlyArray<string>) {}
-function f2(arr: readonly string[]) {}
+type MyOmit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>
+type Person3 = MyOmit<Person1, 'weight'>
+// type Person3 = {
+//     height: number;
+//     name: string;
+//     age: number;
+// }
