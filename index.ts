@@ -1,54 +1,50 @@
-// TypeScript generic type (extends, ternar)
+// TypeScript generic type (generic infer, typeof, arrays, objects)
+let arr = [1, "str", true];
 
-// type A<T> = T;
-// type B = A<string>;
-// type C = A<"TS">;
-// type D = A<number>;
+type A<T> = T extends (infer U)[] ? U : never;
 
-// type A<T extends string> = T;
-type A<T> = T extends string ? string : never;
+type B = typeof arr;
 
-type B = A<string>;
-type C = A<"JS">;
-type D = A<number>;
+type C = A<B>;
 
-// function getName<T extends { name: string }>(person: T): void {
-//   console.log(person.name);
-// }
+// ============================================================
 
-// getName({ name: "Shohjahon", age: 23 });
+const person = { name: "Shohjahon", age: 23 };
 
-// getName({ age: 23 });
+type A2<T> = T extends {
+  [key: string]: infer U;
+}
+  ? U
+  : never;
 
-interface IName {
-  name: string;
+type B2 = typeof person;
+
+type C2 = A2<B2>;
+
+// ============================================================
+
+class Cat {
+  say(): void {
+    console.log("Myau");
+  }
 }
 
-function getName<T extends IName>(person: T): void {
-  console.log(person.name);
+class Dog {
+  say(): void {
+    console.log("Vov");
+  }
 }
 
-getName({ name: "Ismoil" });
-// getName({ age: 23 });
-
-// =======================================================================
-
-interface Inter {
-  a: string;
-  b: boolean;
-  c: number;
+interface IClass<T> {
+  new (): T;
 }
 
-type InterKeys = keyof Inter; // a | b | c
-
-function getProperty<ObjType, ObjKey extends keyof ObjType>(
-  obj: ObjType,
-  key: ObjKey
-) {
-  return obj[key];
+function createObject<T>(clas: IClass<T>) {
+  return new clas();
 }
 
-const result = getProperty(
-  { name: "Shohjahon", age: 23, lastName: "Dilmurodov" },
-  "lastName"
-);
+let cat = createObject(Cat);
+let dog = createObject(Dog);
+
+cat.say();
+dog.say();

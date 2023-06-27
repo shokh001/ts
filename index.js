@@ -1,11 +1,24 @@
 "use strict";
-// TypeScript generic type (extends, ternar)
-function getName(person) {
-    console.log(person.name);
+// TypeScript generic type (generic infer, typeof, arrays, objects)
+let arr = [1, "str", true];
+// ============================================================
+const person = { name: "Shohjahon", age: 23 };
+// ============================================================
+class Cat {
+    say() {
+        console.log("Myau");
+    }
 }
-getName({ name: "Ismoil" });
-function getProperty(obj, key) {
-    return obj[key];
+class Dog {
+    say() {
+        console.log("Vov");
+    }
 }
-const result = getProperty({ name: "Shohjahon", age: 23, lastName: "Dilmurodov" }, "lastName");
+function createObject(clas) {
+    return new clas();
+}
+let cat = createObject(Cat);
+let dog = createObject(Dog);
+cat.say();
+dog.say();
 //# sourceMappingURL=index.js.map
