@@ -1,56 +1,72 @@
 // TypeScript Utils
-// Partial, Required, NonNullable, Record
+// Utils -> Readonly, ReadonlyArray
 
-// Partial
-type Person1 = { name: string; age: number };
-type Person2 = Partial<Person1>;
-// type Person2 = {
-//   name?: string | undefined;
-//   age?: number | undefined;
-// }
+type Article1 = { title: string; page: number };
 
-type MyPartial<T> = { [P in keyof T]?: T[P] };
-type Person3 = MyPartial<Person1>;
-// type Person3 = {
-//   name?: string | undefined;
-//   age?: number | undefined;
-// }
+const article1: Article1 = { title: "Maqola 1", page: 1 };
 
-// Required
-type Animal1 = { name?: string; weight: number };
-type Animal2 = Required<Animal1>;
-// type Animal2 = {
-//   name: string;
-//   weight: number;
-// }
+article1.title = "adsasd";
 
-type MyRequired<T> = { [P in keyof T]-?: T[P] };
-type Animal3 = MyRequired<Animal1>;
-// type Animal3 = {
-//   name: string;
-//   weight: number;
-// }
+type Article2 = Readonly<Article1>;
 
-// NonNullable
+const article2: Article2 = { title: "Maqola 2", page: 2 };
 
-type Color1 = string | null | undefined | number | boolean;
-type Color2 = NonNullable<Color1>; // string | number | boolean
+// article2.title = "adsasd";
 
-type MyNonNullable<T> = T extends null | undefined ? never : T;
-type Color3 = MyNonNullable<Color1>; // string | number | boolean
+type MyReadonly<T> = { readonly [P in keyof T]: T[P] };
 
-// Record
-type Dimensions1 = { width: number; height: number; length: number };
-type Dimensions2 = Record<"width" | "height" | "length", number | string>;
-// type Dimensions2 = {
-//   width: string | number;
-//   height: string | number;
-//   length: string | number;
-// }
+type Article3 = MyReadonly<Article1>;
 
-// type MyRecord<K extends string | number | symbol, T> = { [P in K]: T };
+const article3: Article3 = { title: "Maqola 3", page: 2 };
 
-// type Test = keyof any;
-type MyRecord<K extends keyof any, T> = { [P in K]: T };
+// article3.title = "adsasd";
 
-type Dimensions3 = MyRecord<"width" | "height" | "length", number>;
+const article4 = { title: "Maqola 4", page: 4 } as const;
+
+// article4.title = "asdasd"
+
+const article5 = <const>{ title: "Maqola 5", page: 5 };
+
+// article5.page = 12;
+
+// ================================================================
+// ReadonlyArray
+
+type Articles1 = Array<Article3>;
+
+const articles1: Articles1 = [
+  { title: "Maqola 1", page: 1 },
+  { title: "Maqola 2", page: 2 },
+  { title: "Maqola 3", page: 3 },
+];
+
+// articles1.push({ title: "asd", page: 12 });
+
+type Articles2 = ReadonlyArray<Article3>;
+
+const articles2: Articles2 = [
+  { title: "Maqola 1", page: 1 },
+  { title: "Maqola 2", page: 2 },
+  { title: "Maqola 3", page: 3 },
+];
+
+// articles2.push()
+
+const articles3 = [
+  { title: "Maqola 1", page: 1 },
+  { title: "Maqola 2", page: 2 },
+  { title: "Maqola 3", page: 3 },
+] as const;
+
+// articles3.push();
+
+const articles4 = <const>[
+  { title: "Maqola 1", page: 1 },
+  { title: "Maqola 2", page: 2 },
+  { title: "Maqola 3", page: 3 },
+];
+
+// articles4.pop()
+
+function f1(arr: ReadonlyArray<string>) {}
+function f2(arr: readonly string[]) {}
