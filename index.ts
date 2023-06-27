@@ -1,50 +1,12 @@
 // TypeScript Utils
-// Utils -> Parameters, ConstructorParameters, ReturnType, InstanceType
+// Utils -> Uppercase, Lowercase, Capitalize, UnCapitalize
 
-function func1(x: string, y: number): boolean {
-    return x.length > y.toString().length;
-}
+type Sizes = 'sm' | 'md' | 'lg';
 
-type A = typeof func1;
+type U = Uppercase<Sizes>; // U = "SM" | "MD" | "LG"
 
-// Parameters --> funcsiya qanaqa parametr qabul qilishini aytadi va kotrej qaytaradi 
-type B = Parameters<A>; // -> [x: string, y: number]
+type L = Lowercase<U> // L = "sm" | "md" | "lg"
 
-type MyParameters<T extends (...args: any) => any> = T extends (...args: infer U) => any ? U : any
+type C = Capitalize<Sizes> // C = "Sm" | "Md" | "Lg"
 
-type B2 = MyParameters<A> // -> [x: string, y: number]
-
-// ConstructorParameters --> class constructordagi parametrlarni qaytaradi
-class Class1 {
-    a: number;
-    b: string;
-
-    constructor(a: number, b: string) {
-        this.a = a;
-        this.b = b;
-    }
-}
-
-type C = typeof Class1; // -> Class1
-
-type D = ConstructorParameters<C>; // -> [a: number, b: string]
-
-type MyConstructorParameters<T extends new (...args: any) => any> = T extends new (...args: infer U) => any ? U : any
-
-type D2 = MyConstructorParameters<C> // -> [a: number, b: string]
-
-// ReturnType --> funcsiyaldan nima qaytayotganini bilib olsak bo`ladi
-
-type E = ReturnType<A>; // -> boolean
-
-type MyReturnType<T extends (...args: any) => any> = T extends (...args: any) => infer U ? U : never
-
-type E2 = MyReturnType<A>; // -> boolean
-
-// InstanceType --> classimzni typeni bilish olish uchun
-
-type F = InstanceType<C>; // -> Class1;
-
-type MyInstanceType<T extends new (...args: any) => any> = T extends new (...args: any) => infer U ? U : never
-
-type F2 = MyInstanceType<C>; // -> Class1;
+type UC = Uncapitalize<C> // UC = "sm" | "md" | "lg"

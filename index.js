@@ -1,14 +1,4 @@
 "use strict";
 // TypeScript Utils
-// Utils -> Parameters, ConstructorParameters, ReturnType, InstanceType
-function func1(x, y) {
-    return x.length > y.toString().length;
-}
-// ConstructorParameters --> class constructordagi parametrlarni qaytaradi
-class Class1 {
-    constructor(a, b) {
-        this.a = a;
-        this.b = b;
-    }
-}
+// Utils -> Uppercase, Lowercase, Capitalize, UnCapitalize
 //# sourceMappingURL=index.js.map
