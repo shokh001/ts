@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css"
+        integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <div class="container py-5">
+        <h2>Mahsulotlar</h2>
+
+        <form class="form" id="form">
+            <div class="row align-items-end">
+                <div class="col-md-5">
+                    <label for="product-name" class="form-label">Maxsulot nomi</label>
+                    <input type="text" class="form-control" id="product-name" placeholder="Maxsulot nomini kiriting...">
+                </div>
+                <div class="col-md-5">
+                    <label for="product-price" class="form-label">Maxsulot narxi</label>
+                    <input type="number" class="form-control" id="product-price"
+                        placeholder="Maxsulot narxini kiriting...">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary">Yuborish</button>
+                </div>
+            </div>
+        </form>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nomi</th>
+                    <th>Narxi</th>
+                </tr>
+            </thead>
+            <tbody id="table">
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <script src="./script.js"></script>
+
+</body>
+
+</html>
