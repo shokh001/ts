@@ -7,14 +7,14 @@ function func1(x: string, y: number): boolean {
 
 type A = typeof func1;
 
-// Parameters
+// Parameters --> funcsiya qanaqa parametr qabul qilishini aytadi va kotrej qaytaradi 
 type B = Parameters<A>; // -> [x: string, y: number]
 
 type MyParameters<T extends (...args: any) => any> = T extends (...args: infer U) => any ? U : any
 
 type B2 = MyParameters<A> // -> [x: string, y: number]
 
-// ConstructorParameters
+// ConstructorParameters --> class constructordagi parametrlarni qaytaradi
 class Class1 {
     a: number;
     b: string;
@@ -33,7 +33,7 @@ type MyConstructorParameters<T extends new (...args: any) => any> = T extends ne
 
 type D2 = MyConstructorParameters<C> // -> [a: number, b: string]
 
-// ReturnType
+// ReturnType --> funcsiyaldan nima qaytayotganini bilib olsak bo`ladi
 
 type E = ReturnType<A>; // -> boolean
 
@@ -41,7 +41,7 @@ type MyReturnType<T extends (...args: any) => any> = T extends (...args: any) =>
 
 type E2 = MyReturnType<A>; // -> boolean
 
-// InstanceType
+// InstanceType --> classimzni typeni bilish olish uchun
 
 type F = InstanceType<C>; // -> Class1;
 

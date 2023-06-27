@@ -4,7 +4,7 @@
 function func1(x, y) {
     return x.length > y.toString().length;
 }
-// ConstructorParameters
+// ConstructorParameters --> class constructordagi parametrlarni qaytaradi
 class Class1 {
     constructor(a, b) {
         this.a = a;
