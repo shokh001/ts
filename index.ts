@@ -1,63 +1,61 @@
-// TypeScript Nullish assigment vs chaining operator
+// TypeScript ! operator va foydalanuvchi malumotlari tekshirish
 
-// Nullish assigment -> null yoki undefinedga tneg bulsa boshqa narsani oladi
-
-let a: number | null | undefined = null;
-a = undefined;
-a = 20;
-let b: number = a ?? 0;
-// || va ?? farqi yoki operatori false bulgan barchasini qabul qiladi ?? esa faqat null va undefinedni
-// console.log(b);
-
-
-// chaining
-// const obj = {
-//     user: {
-//         name: '',
-//         country: {
-//             region: "",
-//         }
-//     }
-// }
-
-// const obj2 = {
-//     user: {
-//         name: '',
-//         country: null
-//     }
-// }
-
-// console.log(obj.user.country?.region);
-
-function sum(x: number, y: number, cb?: (v: number) => void): number {
-    let natija: number = x + y;
-    // if (cb) {
-    //     cb(natija);
-    // }
-    cb?.(natija)
-    return natija;
+interface IProduct {
+    name: string,
+    weight?: number
 }
 
-// const res: number = sum(3, 5, (e) => console.log("callback: ", e)
-// );
-
-// console.log('res = ', res);
-
-type arr = ({ price: number } | null | undefined)[];
-
-function calcPrice(arr: arr): number {
+function calcWeight(products: IProduct[]): number {
     let s: number = 0;
-    arr.forEach(element => {
-        s += element?.price ?? 0
-    });
+
+    products.forEach(item => {
+        s += item.weight!; // objectni ichida aniq weight degan field borligini bilganimzda ishlatamiz ! ni
+    })
+
     return s;
 }
 
-const result: number = calcPrice([
-    { price: 1 },
-    null,
-    { price: 4 },
-    undefined
+const res: number = calcWeight([
+    { name: 'item 1', weight: 1 },
+    { name: 'item 2', weight: 2 },
+    { name: 'item 3', weight: 3 },
 ])
 
-console.log(result);
+console.log(res);
+
+let a: number | undefined | null = null;
+
+setTimeout(() => {
+    a = 20
+}, 500)
+
+setTimeout(() => {
+    let b: number = a!;
+    console.log(b);
+}, 1000)
+
+// let c!: string;
+// console.log(c)
+
+class Front {
+    isRestApi: boolean = false
+}
+
+class Back {
+    isRestApi: boolean = true
+
+    createApi() { }
+}
+
+function isBack(dev: any): dev is Back {
+    return dev.createApi;
+}
+
+function writeCode(dev: Front | Back) {
+    // if(dev.isRestApi) {
+    //     dev.
+    // }
+    if (isBack(dev)) {
+        dev.createApi();
+    }
+}
