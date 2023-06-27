@@ -1,37 +1,25 @@
-// TypeScript Mustahkamlash (abstract & modules)
+// TypeScript BigInt
 
-abstract class ComputerFiles {
-    abstract name: string;
-    abstract show(): void;
+console.log("Number.MAX_VALUE = ", Number.MAX_VALUE);
+console.log("Number.MAX_SAFE_INTEGER = ", Number.MAX_SAFE_INTEGER);
+console.log("9007199254740991 + 2 = ", 9007199254740991 + 2);
 
-    abstract set size(value: number);
-    abstract get size(): number;
-}
+// let a: bigint = 12; error
 
-class TextFile extends ComputerFiles {
-    name: string;
-    size: number;
+let a: bigint = 12n;
+// let b: bigint = 12.3n; kasr yozib bulmaydi bigintda
 
-    constructor(name: string, size: number) {
-        super();
-        this.name = name;
-        this.size = size;
-    }
+console.log('a = ', a);
 
-    show(): void {
-        console.log(this.size);
+// let c: bigint = <bigint>12; error
+// let d: bigint = 12 as bigint; error
+let e: bigint = BigInt(12);
 
-    }
-}
+console.log('e = ', e);
 
-// namespace & module
+console.log('10n / 3n = ', 10n / 3n); // 3n
 
-namespace Photos {
-    export class JPEG { }
-    export class PNG { }
-}
+console.log("BigInt 9007199254740991 + 2 = ", BigInt(9007199254740991) + 2n);
 
-module Videos {
-    export class MP4 { }
-    export class AVI { }
-}
+
+
